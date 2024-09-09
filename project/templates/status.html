@@ -1,0 +1,146 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<!-- <div class="container"> -->
+  <h1>Celery State</h1>
+  <hr><br>
+  <!-- <div>
+    <h3>Tasks</h3>
+    <p>Pick a task length.</p>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-primary" onclick="handleClick(1)">Short</a>
+      <button type="button" class="btn btn-primary" onclick="handleClick(2)">Medium</a>
+      <button type="button" class="btn btn-primary" onclick="handleClick(3)">Long</a>
+    </div>
+    <p>Complex</p>
+    <div class="btn-group" role="group" aria-label="More Options">
+      <button type="button" class="btn btn-primary" onclick="handleClick(4)">MakPak</a>
+      <button type="button" class="btn btn-primary" onclick="handleClick(5)">GroupPaks</a>
+      <button type="button" class="btn btn-primary" onclick="handleClick(6)">ChordPaks</a>
+    </div>
+  </div>
+  <br><br> -->
+  <div>
+    <br>
+    {% if inspection %}
+      <div class="alert alert-success" role="alert" aria-label="Inspection">
+        {{ inspection }}
+      </div>
+    {% endif %}
+  </div>
+  <div>
+    <h3>Task Status</h3>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Status</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody id="tasks">
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h3>Pak Status</h3>
+    <br>
+        {% if jobs %}
+        <div class="accordian accordian-flush" id="accordianJobs">
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Pct</th>
+                    <th>Status</th>
+                    <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                        <div>
+                            <tr>
+                                <td>{{ job.name() }}</td>
+                                <td>{{ job.id() }}</td>
+                                <td>{{ job.pct }}</td>
+                                <td>{{ job.status() }}</td>
+                                <td>
+                                    <button type="button"
+                                    {% if job.status() != "???" %}
+                                    class="btn btn-success"
+                                    {% elif job.status() == "COMPLETE" %}
+                                    class="btn btn-info"
+                                    {% elif job.status() == "FAILURE" %}
+                                    class="btn btn-danger"
+                                    {% else %}
+                                    class="btn btn-light"
+                                    {% endif %}
+                                    >
+                                    
+                                    </button>
+                                </td>
+                            </tr>
+                        </div>
+                    {% if job.tasks %}
+                    <div class="accordian-item">
+                        <h2 class="accordian-header" id="flush-headingOne">
+                            <button class="accordian-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseJob{{ job.id() }}" aria-expanded="false" 
+                                    aria-controls="flush-collapseJob{{ job.id() }}">
+                            {{ job.name() }} Chain
+                        </button>
+                        </h2>
+                        <div class="flush-collapseJob{{ job.id() }}" class="accordian-button collapse" 
+                            data-bs-parent="#accordianJobs">
+                            <div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Status</th>
+                                    <th>Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for task in job.children.values() %}
+                                    <tr>
+                                        <td>{{ task.name() }}</td>
+                                        <td>{{ task.id() }}</td>
+                                        <td>{{ task.status() }}</td>
+                                        <td>{{ task.result() }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <h4>
+                        {{ job.name() }} 
+                    </h4>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        No Jobs
+        {% endif %}
+  </div>
+<!-- </div> -->
+
+{% endblock %}
+
+{% block js %}
+<script>
+    function autoRefresh() {
+        window.location = window.location.href;
+    }
+    setInterval('autoRefresh()', 5000);
+</script>
+{% endblock %}

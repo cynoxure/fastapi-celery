@@ -5,6 +5,8 @@
 <div class="starter-template">
   <h1>FastAPI + Celery + Docker</h1>
   <hr><br>
+  <a href="/clear" class="btn btn-primary" title="Clear">Clear Jobs</a>
+  <br>
   <div>
     <h3>Tasks</h3>
     <p>Pick a task length.</p>
@@ -13,8 +15,23 @@
       <button type="button" class="btn btn-primary" onclick="handleClick(2)">Medium</a>
       <button type="button" class="btn btn-primary" onclick="handleClick(3)">Long</a>
     </div>
+    <p>Complex</p>
+    <div class="btn-group" role="group" aria-label="More Options">
+      <button type="button" class="btn btn-primary" onclick="handleClick(4)">MakPak</a>
+      <button type="button" class="btn btn-primary" onclick="handleClick(5)">GroupPaks</a>
+      <button type="button" class="btn btn-primary" onclick="handleClick(6)">ChordPaks</a>
+    </div>
   </div>
   <br><br>
+  <div>
+    <h3>Celery State</h3>
+    <br>
+    {% if inspection %}
+      <div class="alert alert-success" role="alert" aria-label="Inspection">
+        {{ inspection }}
+      </div>
+    {% endif %}
+  </div>
   <div>
     <h3>Task Status</h3>
     <br>
@@ -27,6 +44,24 @@
         </tr>
       </thead>
       <tbody id="tasks">
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h3>Pak Status</h3>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>W</th>
+          <th>X</th>
+          <th>Y</th>
+          <th>Status</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody id="paks">
       </tbody>
     </table>
   </div>

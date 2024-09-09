@@ -1,0 +1,14 @@
+name: fastapi-celery
+channels:
+  - conda-forge
+dependencies:
+  - aiofiles
+  - celery
+  - fastapi
+  - flower
+  - Jinja2
+  - pytest
+  - requests
+  - uvicorn
+  - httpx
+  - pydot
